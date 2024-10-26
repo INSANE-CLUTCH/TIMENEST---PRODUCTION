@@ -17,8 +17,17 @@ from langchain.memory import ConversationBufferMemory
 from utils import convert_to_js,trigger_metadata
 import re
 from config.config_env import TOGETHER_API_KEY
-from datetime import timedelta
+from datetime import timedelta, datetime
+
 from dateutil import parser
+from werkzeug.security import generate_password_hash, check_password_hash
+
+from flask_jwt_extended import (
+    JWTManager, create_access_token, create_refresh_token,
+    jwt_required, get_jwt_identity, set_access_cookies,
+    set_refresh_cookies, unset_jwt_cookies, get_jwt
+)
+
 
 mongo_client = MongoManager("Timenest")
 
@@ -40,12 +49,24 @@ DEFAULT_MODEL = "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo"
 # DEFAULT_MODEL = "Qwen/Qwen2.5-72B-Instruct-Turbo"
 
 
-
-from datetime import datetime
-
-app = Flask(__name__)
+# app = Flask(__name__)
 # app.config["REDIS_URL"] = "redis://127.0.0.1:6379"
 # app.register_blueprint(sse, url_prefix='/stream')
+
+app = Flask(__name__)
+
+app.config.update(
+    JWT_SECRET_KEY="abcdef",  # Should be a strong secret in production
+    JWT_TOKEN_LOCATION=["cookies"],
+    JWT_ACCESS_TOKEN_EXPIRES=timedelta(minutes=1),
+    JWT_REFRESH_TOKEN_EXPIRES=timedelta(days=30),
+    JWT_COOKIE_SECURE=True,  # Only send cookies over HTTPS
+    JWT_COOKIE_CSRF_PROTECT=True,  # Enable CSRF protection
+    JWT_ACCESS_CSRF_HEADER_NAME="X-CSRF-TOKEN",
+    JWT_ACCESS_COOKIE_NAME="access_token_cookie",
+)
+
+jwt = JWTManager(app)
 
 socketio = SocketIO(app)
 
@@ -59,30 +80,88 @@ def index():
 def create_account_page():
     return render_template('login.html')
 
+# required jwt to render calendar (main.html)
 @app.route('/calendar')
+@jwt_required()
 def render_calendar():
-    username = request.args.get('username', 'Guest')
-    userID = mongo_client.find_one(collection_name='users',filter={'UserName':username})['userID']
-    return render_template('main.html', username=username,userID=userID)
-    # return render_template('main.html')
-
+    current_user = get_jwt()  # Get full JWT data including claims
+    user_id = get_jwt_identity()
+    user = mongo_client.find_one('users', {'userID': user_id})
+    if not user:
+        abort(404)
+    
+    return render_template(
+        'main.html',
+        username=current_user.get("username", "Guest"),
+        userID=user_id
+    )
 
 @app.route("/login", methods=['POST'])
 def login():
     data = request.json
     username = data.get("username")
     password = data.get("password")
+    
+    user = mongo_client.find_one('users', {'UserName': username})
+    if user:
+        user_id = user["userID"]
+               
+        access_token = create_access_token(
+            identity=user_id,        
+            additional_claims={"username": user.get("UserName")}
+        )
+        refresh_token = create_refresh_token(identity=user_id)
+        
+        response = jsonify({
+            "message": "Login successful",
+            "userID": user_id
+        })
+        
+        # Set secure cookies
+        set_access_cookies(response, access_token)
+        set_refresh_cookies(response, refresh_token)
+        
+        return response, 200
+    
+    # Use a generic error message to prevent username enumeration
+    return jsonify({"message": "Invalid credentials"}), 401
 
-    if mongo_client.find_one('users', {'UserName': username}):
-        if mongo_client.find('users', {'UserName': username, 'Password': password}):
-            record = mongo_client.find_one('users',{'UserName': username})
-            trigger_metadata(record['userID'])
-            userID = record['userID']
-            return jsonify({"message": "Login successful","userID":userID}), 200
-        else:
-            return jsonify({"message": "Wrong password"}), 200
-    else:
-        return jsonify({"message": 'User not found, would you like to create an account?'}), 401
+@jwt.expired_token_loader
+def expired_token_callback(jwt_header, jwt_payload):
+    """Handle expired tokens by returning 401 status"""
+    return render_template('login.html')
+    return jsonify({
+        "status": 401,
+        "sub_status": 42,
+        "message": "The token has expired"
+    }), 401
+
+@app.route('/refresh', methods=['POST'])
+@jwt_required(refresh=True)
+def refresh():
+    """
+    Endpoint to refresh access token using refresh token.
+    Called automatically by frontend when access token is about to expire.
+    """
+    current_user_id = get_jwt_identity()
+    
+    # Verify user still exists
+    user = mongo_client.find_one('users', {'userID': current_user_id})
+    if not user:
+        response = jsonify({"message": "User not found"})
+        unset_jwt_cookies(response)
+        return response, 401
+    
+    # Create new access token
+    access_token = create_access_token(
+        identity=current_user_id,
+        additional_claims={"username": user.get("UserName")}
+    )
+    
+    response = jsonify({"message": "Token refreshed successfully"})
+    set_access_cookies(response, access_token)
+    
+    return response, 200
 
 @app.route('/create-account', methods=['POST'])
 def create_account():
