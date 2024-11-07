@@ -91,7 +91,6 @@ function updateCalendarDisplay() {
   const weekStart = currentWeek;
   const dayElements = document.querySelectorAll('.calendar-day');
   const dayOfWeekElements = document.querySelectorAll('.day_of_week');
-
   let startMonth = null;
   let startYear = null;
   let endMonth = null;
@@ -104,10 +103,10 @@ function updateCalendarDisplay() {
     // Hiển thị ngày trong tuần
     element.textContent = date.getDate().toString().padStart(2, '0');
     element.dataset.date = formatDate(date);
-    if (date.toDateString() === currentDate.toDateString()) {
-      element.style.color = '#4361ee';
-      element.style.fontWeight = 'bold';
-    }
+    console.log(index, currentDate.toDateString(), date.toDateString());
+    if (date.toDateString() === currentDate.toDateString())
+      element.classList.add('calendar-day-today');
+    else element.classList.remove('calendar-day-today');
 
     // Lấy thông tin ngày trong tuần
     const dayOfWeek = getDayOfWeek(date);

@@ -73,6 +73,11 @@
   text-align: center;
 }
 
+.calendar-day-today{
+  color: #4361ee;
+  font-weight: bold;
+}
+
 .day_of_week {
   font-size: 25px;
   font-weight: 500;
