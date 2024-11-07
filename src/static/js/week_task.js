@@ -38,6 +38,8 @@ function createTaskElement(taskData) {
   task.appendChild(taskName);
   task.appendChild(taskTime);
   task.appendChild(taskDescript);
+  task.style.backgroundColor = taskData.taskColor;
+  
   task.dataset.status = "In progress";
 
   // Lấy các giá trị từ các trường input khi click vào button
