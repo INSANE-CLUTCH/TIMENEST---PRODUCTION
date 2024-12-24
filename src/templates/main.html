@@ -30,115 +30,133 @@
     <title>Timenest</title>
   </head>
   <body>
-    <div class="h__container">
+    <div class="header">
       <div class="h-col-1">
-        <img
-          id="logo"
-          src="../static/TIMENEST-05 1 Black.svg"
-          alt="timenest"
-          style="height: 34px"
-        />
-        <button
-          class="menu"
-          data-tooltip="Main menu"
-          aria-label="button"
-          role="button"
-        >
-          <img
-            src="../static/Vector.svg"
-            alt="menu button"
-            style="height: 22px"
-          />
-        </button>
-        <img
-          id="beta"
-          src="../static/Colored Beta.svg"
-          alt="timenest"
-          style="height: 34px"
-        />
-        <!-- <div class="beta-button">
-                  <div class="beta-text">BETA</div>
-                </div> -->
+          <img id="logo" src="/src/static/TIMENEST-05 1 Black.svg" alt="timenest" style="height: 30px;">
+          <button class="menu" data-tooltip="Main menu" aria-label="button" role="button">
+              <img src="/src/static/sc-status-icon.svg" alt="menu button" style="height: 24px">
+          </button>
       </div>
       <div class="group-right">
         <div class="undo-redo">
-          <button
-            class="undo"
-            data-tooltip="Undo"
-            aria-label="button"
-            role="button"
-          >
-            <img
-              src="../static/Undo.svg"
-              alt="undo button"
-              style="height: 20px"
-            />
-          </button>
-          <button
-            class="redo"
-            data-tooltip="Undo"
-            aria-label="button"
-            role="button"
-          >
-            <img
-              src="../static/Redo.svg"
-              alt="redo button"
-              style="height: 20px"
-            />
-          </button>
+            <button class="undo" data-tooltip="Undo" aria-label="button" role="button">
+                <img src="/src/static/chevron-left.svg" alt="undo button" style="height: 20px">
+            </button>
+            <button class="redo" data-tooltip="Undo" aria-label="button" role="button">
+                <img src="/src/static/chevron-right.svg" alt="redo button" style="height: 20px">
+            </button>
         </div>
         <p id="workspace-display">{{username}}'s workspace</p>
-        <div>
-          <button
-            class="logout"
-            id="logoutBtn"
-            data-tooltip="Undo"
-            aria-label="button"
-            role="button"
-          >
-            <img
-              src="../static/log-out-outline.svg"
-              alt="logout button"
-              style="height: 32px"
-            />
-          </button>
+        <div class="rightmost">
+            <button class="theme" id="theme"><img src="/src/static/editor-dot.svg" style="height: 26px"></button>
+            <button class="logout" id="logoutBtn" data-tooltip="Undo" aria-label="button" role="button">
+              <img src="/src/static/clear.svg" alt="logout button" style="height: 18px">
+            </button>
         </div>
       </div>
     </div>
-    <main class="main">
-      <div class="sidebar">
-        <div class="sidebar-content__wrapper1">
-          <div class="short-cut1">
-            <button class="sc-1" aria-label="button" role="button">
-              <img src="../static/fi-ss-envelope.svg" alt="envelope" />
-            </button>
-            <button class="sc-1" aria-label="button" role="button">
-              <img src="../static/fi-ss-shopping-bag.svg" alt="shopping" />
-            </button>
-            <button class="sc-1" aria-label="button" role="button">
-              <img src="../static/fi-ss-basketball.svg" alt="basketball" />
-            </button>
+    <div class="container">
+      <div class="item item-1" id="item1">
+          <div class="upper">
+              <button id="toggleText"><h1>Analysis</h1></button>
+              <button id="toggleButton"><img src="/src/static/expand.svg" style="width: 24px"></button>
           </div>
-
-          <div class="div-manage">
-            <button class="manage" aria-label="button" role="button">
-              <p>Manage</p>
-            </button>
+          <div class="slide-container" id="slider">
+              <div class="slide-content" id="slideContent">
+                <div class="display-zone">
+                  <div class="chart chart-1">
+                      <h2>Progress Bar</h2>
+                      <div class="progress-bar week">
+                        <div class="info">
+                          <p>Week</p>
+                          <p class="progress-text">0%</p>
+                        </div>
+                        <div id="progress-container">
+                            <div id="progress-bar"></div>
+                        </div>
+                        
+                      </div>
+                      <div class="progress-bar month">
+                        <div class="info">
+                          <p>Month</p>
+                          <p class="progress-text">0%</p>
+                        </div>
+                        <div id="progress-container">
+                            <div id="progress-bar"></div>
+                        </div>
+                      </div>
+                      <div id="summary" style="display: none"></div>
+                  </div>
+                </div>
+                <div class="display-zone">
+                    <div class="chart chart-2">
+                        <h2>Tasks Distribution</h2>
+                        <button class="switch-hour">Switch</button>
+                        <div class="chart-2-container">
+                          <div class="chart-2-items number1">
+                            <div class="color color-1"></div>
+                            <div class="text text-1">Growth</div>
+                            <div class="percentage percentage-1">35%</div>
+                          </div>
+                          <div class="chart-2-items number2">
+                            <div class="color color-2"></div>
+                            <div class="text text-2">Growth</div>
+                            <div class="percentage percentage-2">35%</div>
+                          </div>
+                          <div class="chart-2-items number3">
+                            <div class="color color-3"></div>
+                            <div class="text text-3">Growth</div>
+                            <div class="percentage percentage-3">35%</div>
+                          </div>
+                          <div class="chart-2-items number4">
+                            <div class="color color-4"></div>
+                            <div class="text text-4">Growth</div>
+                            <div class="percentage percentage-4">35%</div>
+                          </div>
+                          <div class="chart-2-items number5">
+                            <div class="color color-5"></div>
+                            <div class="text text-5">Growth</div>
+                            <div class="percentage percentage-5">35%</div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="display-zone">
+                  <div class="chart chart-3">
+                      <h2>Priorities vs. Completion Rate</h2>
+                      <div class="chart-3-container">
+                        <div class="priority">
+                          <p class="title">Priority ranking</p>
+                          <div class="priority-ranking">
+                            <p id="p-most" class="most important"></p>
+                            <div id="priorityBar" class="priority-bar"></div>
+                            <p id="p-least" class="least important"></p>
+                          </div>
+                        </div>
+                        <div class="completion">
+                          <p class="title">Completion rate ranking</p>
+                          <div class="completion-ranking">
+                            <p id="c-most" class="most important"></p>
+                            <div id="completionBar" class="completion-bar"></div>
+                            <p id="c-least" class="least important"></p>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div class="bottom-part">
+                  <button class="btn" id="prevButton"><img src="/src/static/caret-left_w.svg" style="width: 20px"></button>
+                  <div class="dot-container" id="indicator"></div>
+                  <button class="btn" id="nextButton"><img src="/src/static/caret-right_w.svg" style="width: 20px"></button>
+              </div>
           </div>
-
+      </div>
+      <div class="item item-2">
           <div class="div-create">
-            <button
-              class="create"
-              id="createBtn"
-              aria-label="button"
-              role="button"
-            >
-              <img
-                src="../static/fi-ss-add.svg"
-                alt="plus"
-                style="width: 55px"
-              />
-              <div class="create-text">Create</div>
+            <button class="create" id="createBtn" aria-label="button" role="button">
+                <img src="/src/static/fi-ss-add.svg" alt="plus" style="width: 50px">
+                <div class="create-text">Create</div>
             </button>
           </div>
 
@@ -159,29 +177,22 @@
             </div>
           </div>
 
-          <div class="tracker">
-            <div class="progress-container">
-              <span class="time-period"></span>
-              <div class="progress-bar"></div>
-            </div>
-          </div>
           <div class="chatbot">
-            <div class="header">
-              <h1>Clutch AI</h1>
+            <div class="chatbot-header">
+                <h1>Timenest</h1>
             </div>
             <div class="chat-window">
-              <div class="bot-message">
-                <p>Hi {{username}}! How can I help you today?</p>
-              </div>
+                <div class="bot-message">
+                    <p>Hi {{username}}! How can I help you today?</p>
+                </div>
             </div>
             <div class="input-area">
-              <input type="text" placeholder="Type a message..." required />
-              <button class="send"><img src="../static/Arrow 1.svg" /></button>
+                <input type="text" placeholder="Type a message..." required>
+                <button class="send"><img src="/src/static/Arrow 1.svg"></button>
             </div>
-          </div>
-          <!-- Move this script to the end of the body -->
         </div>
       </div>
+          <!-- Move this script to the end of the body -->
       <!-- Khung hiển thị thông tin -->
       <div id="taskInfo" class="task-info">
         <div class="task-content">
@@ -207,7 +218,7 @@
         </div>
       </div>
 
-      <div class="right-component">
+      <div class="item item-3">
         <div class="calendar-zone">
           <div class="calendar-zone-top">
             <div class="today">
@@ -244,7 +255,7 @@
           </div>
 
           <!-- Calendar view -->
-          <div id = 'calendar-container'></div>
+          <div id ='calendar-container'></div>
         </div>
 
         <div class="bottom">
@@ -265,7 +276,7 @@
           </div>
         </div>
       </div>
-    </main>
+    </div>
     <script>
       const socket = io();
       socket.on('connect', () => {
@@ -277,6 +288,8 @@
         addTaskToCalendarFromDB(taskData);
       });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="analysis.js" defer></script>
     <script src="../static/js/utils.js" defer></script>
     <script src="../static/js/api.js" defer></script>
     <script src="../static/js/week_view.js" defer></script>
