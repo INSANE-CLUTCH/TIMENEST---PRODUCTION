@@ -1,48 +1,95 @@
-.main {
+.container {
+  width: 100%;
+  height: 96vh;
+  display: grid;
+  grid-template-columns: 20% 1fr 1fr 1fr 1fr; /* 5 equal columns */
+  grid-template-rows: repeat(8, 1fr); /* 8 equal rows */
+  position: relative;
+}
+
+.item {
+  box-sizing: border-box;
+}
+
+.item-1 {
+  background-color: var(--analysis-color);
+  backdrop-filter: blur(20px);
+  grid-row: 1 / 3; 
+  grid-column: 1 / 2; 
+  border-radius: 20px;
   padding: 1rem;
   display: flex;
-  width: 100%;
-  height: calc(100vh - 40px);
-  overflow: hidden;
+  flex-direction: column;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  z-index: 1;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  transition: box-shadow 0.3s ease;
+  color: white;
+  box-sizing: border-box;
 }
 
-.right-component {
-  flex: 1;
+.item-1:hover {
+  box-shadow: rgba(0, 0, 0, 0.24) 1px 4px 9px;
+
+}
+
+.item-1.expanded {
+  grid-row: 1 / 4; 
+  grid-column: 1 / 3; 
+}
+
+.item-2 {
+  background-color: transparent;
+  grid-row: 3 / 9;
+  grid-column: 1 / 2;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
-  width: 100%;
-  height: 100%;
-}
-
-.bottom {
-  margin-right: 4rem;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
   gap: 1rem;
 }
 
-.option {
+.item-3 {
+  background-color: transparent;
+  grid-row: 1 / 9;
+  grid-column: 2 / 6;
+  margin-top: 0.5rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
 }
 
-.option button {
-  background-color: #e1f1ff;
-  border: none;
-  border-radius: 20px;
-  height: 50px;
-  width: 90px;
+.bottom {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+  gap: 1rem;
+  margin-left: -4.5rem;
+}
+
+.bottom button {
+  background-color: var(--calendarzone-color);
+  border: none;
+  outline: none;
+  height: 45px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.4s ease;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-.option button:hover {
+.bottom button:hover {
   background-color: rgba(0, 0, 0, 0.15);
 }
 

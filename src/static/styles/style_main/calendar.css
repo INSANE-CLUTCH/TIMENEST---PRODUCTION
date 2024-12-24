@@ -1,0 +1,112 @@
+.calendar-zone {
+    background-color: var(--calendarzone-color);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    padding: 1rem;
+    gap: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+
+#calendar-container {
+  height: 930px;
+}
+  
+  .calendar-zone-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 600;
+    color: white;
+    gap: 1rem;
+  }
+  
+  #btn-today {
+    background-color: var(--button-color);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 1.2rem 3rem;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+  
+  #btn-today:hover {
+    background-color: var(--button-hover-color);
+    transform: scale(1.02);
+  }
+  
+  #btn-today p {
+    color: white;
+  }
+  
+  .day {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 15px;
+    padding: 1.2rem 2.5rem;
+    background-color: var(--button-color);
+    transition: all 0.3s ease;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  
+  }
+  
+  .day button {
+    background-color: transparent;
+    border: none;
+    outline: none; 
+    cursor: pointer;
+  }
+  
+  .day button:first-child {
+    margin-left: -0.5rem;
+    margin-right: 1rem;
+  }
+  
+  .day p {
+    margin-left: 1.5rem;
+  }
+  
+  .day:hover {
+    background-color: var(--button-hover-color);
+    transform: scale(1.02);
+  }
+  
+  .right{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .search {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+  }
+  
+  .search button {
+    background-color: var(--button-color);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0.85rem 0.85rem;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+  
+  .search button img {
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+  }
+  
+  .search button:hover {
+    background-color: var(--button-hover-color);
+    transform: scale(1.02);
+  }
